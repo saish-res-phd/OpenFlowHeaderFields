@@ -17,7 +17,7 @@ def start_network():
     
     # Start network and assign IP addresses to hosts
     net.start()
-    switch.start([controller])
+    s1.start([controller])
     
     h1.cmd('ifconfig h1-eth0 10.0.0.1 netmask 255.255.255.0')
     h2.cmd('ifconfig h2-eth0 10.0.0.2 netmask 255.255.255.0')
