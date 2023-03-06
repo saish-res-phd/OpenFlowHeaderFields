@@ -23,7 +23,7 @@ def start_network():
     h2.cmd('ifconfig h2-eth0 10.0.0.2 netmask 255.255.255.0')
     
     # Define 25 OpenFlow header fields on controller using ovs-ofctl command
-    fields = [
+    fields = {
          'in_port': 1,
         'eth_src': '00:00:00:00:00:01',
         'eth_dst': '00:00:00:00:00:02',
@@ -50,7 +50,7 @@ def start_network():
         'ipv6_nd_target': '2001:db8::1',
         'ipv6_nd_sll': '00:00:00:00:00:01',
         'ipv6_nd_tll': '00:00:00:00:00:00'
-    ]
+    }
     for field in fields:
         net.controllers[0].cmd('ovs-ofctl add-flow s1 ' + field + ',actions=output:2')
     
