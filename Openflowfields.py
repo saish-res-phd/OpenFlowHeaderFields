@@ -1,6 +1,7 @@
 from mininet.net import Mininet
 from mininet.node import Controller, OVSSwitch
 from mininet.link import TCLink
+import subprocess
 
 def start_network():
     # Create Mininet network
@@ -57,15 +58,23 @@ def start_network():
     'ipv6_nd_sll': '00:00:00:00:00:01',
     'ipv6_nd_tll': '00:00:00:00:00:00'
     }
+  openflow_version = subprocess.check_output(["ovs-ofctl", "--version"]).decode("utf-8").splitlines()[0].split()[1]
+  if openflow_version >= "0x05":
+        for key, value in fields.items():
+            if isinstance(value, str):
+                 value_str = '"{}"'.format(value)
+             else:
+                value_str = str(value)
+             net.controllers[0].cmd("ovs-ofctl add-flow s1 {0}={1},actions=output:2".format(key, value_str))
+  else:
     for key, value in fields.items():
-        if isinstance(value, int):
-            value_str = '"{}"'.format(value)
+        if isinstance(value, str):
+             value_str = '"{}"'.format(value)
         else:
-            value_str = '"{}"'.format(value)
+            value_str = str(value)
         net.controllers[0].cmd("ovs-ofctl add-flow s1 {0}={1},actions=output:2".format(key, value_str))
+            
 
-
-    
     # Dump OpenFlow flows and display 25 header fields
     flows = net.controllers[0].cmd('ovs-ofctl dump-flows s1')
     print(flows)
