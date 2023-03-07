@@ -52,7 +52,6 @@ def start_network():
         'ipv6_nd_tll': '00:00:00:00:00:00'
     }
    for key, value in fields.items():
-    
     net.controllers[0].cmd("ovs-ofctl add-flow s1 '{0}={1}',actions=output:2".format(key, value))
 
     
