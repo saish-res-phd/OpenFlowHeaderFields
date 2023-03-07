@@ -70,13 +70,13 @@ def start_network():
     'icmpv6_nd_tll': '00:00:00:00:00:00',
     'mpls_ttl': 64,
     'mpls_bos': 0
-}
-for key, value in fields.items():
-    if isinstance(value, str):
-        value_str = '"{}"'.format(value)
-    else:
-        value_str = str(value)
-    net.controllers[0].cmd("ovs-ofctl add-flow s1 {0}={1},actions=output:2".format(key, value_str))
+    }
+    for key, value in fields.items():
+        if isinstance(value, str):
+            value_str = '"{}"'.format(value)
+        else:
+            value_str = str(value)
+        net.controllers[0].cmd("ovs-ofctl add-flow s1 {0}={1},actions=output:2".format(key, value_str))
 
             
 
