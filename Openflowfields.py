@@ -51,8 +51,8 @@ def start_network():
         'ipv6_nd_sll': '00:00:00:00:00:01',
         'ipv6_nd_tll': '00:00:00:00:00:00'
     }
-    for field in fields:
-        net.controllers[0].cmd('ovs-ofctl add-flow s1 ' + field + ',actions=output:2')
+    for key, value in fields.items():
+        net.controllers[0].cmd(f"ovs-ofctl add-flow s1 '{key}={value}',actions=output:2")
     
     # Dump OpenFlow flows and display 25 header fields
     flows = net.controllers[0].cmd('ovs-ofctl dump-flows s1')
