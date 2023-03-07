@@ -53,7 +53,7 @@ def start_network():
     }
     
     for key, value in fields.items():
-    net.controllers[0].cmd("ovs-ofctl add-flow s1 '{0}={1}',actions=output:2".format(key, value))
+        net.controllers[0].cmd("ovs-ofctl add-flow s1 '{0}={1}',actions=output:2".format(key, value))
 
     
     # Dump OpenFlow flows and display 25 header fields
