@@ -23,25 +23,27 @@ def start_network():
     h1.cmd('ifconfig h1-eth0 10.0.0.1 netmask 255.255.255.0')
     h2.cmd('ifconfig h2-eth0 10.0.0.2 netmask 255.255.255.0')
     
-    # Define 25 OpenFlow header fields on controller using ovs-ofctl command
+    # Define OpenFlow header fields on controller using ovs-ofctl command
     fields = {
-        'in_port': 1,
+    'in_port': 1,
     'in_phy_port': 1,
     'metadata': 0x1234567890abcdef,
-    'eth_src': '00:00:00:00:00:01',
     'eth_dst': '00:00:00:00:00:02',
+    'eth_src': '00:00:00:00:00:01',
     'eth_type': 2048,
-    'ipv4_src': '10.0.0.1',
-    'ipv4_dst': '10.0.0.2',
-    'ip_proto': 6,
     'vlan_vid': 4096,
     'vlan_pcp': 3,
     'ip_dscp': 10,
     'ip_ecn': 3,
+    'ip_proto': 6,
+    'ipv4_src': '10.0.0.1',
+    'ipv4_dst': '10.0.0.2',
     'tcp_src': 1234,
     'tcp_dst': 80,
     'udp_src': 1234,
     'udp_dst': 80,
+    'sctp_src': 1234,
+    'sctp_dst': 80,
     'icmpv4_type': 8,
     'icmpv4_code': 0,
     'arp_op': 1,
@@ -56,23 +58,28 @@ def start_network():
     'icmpv6_code': 0,
     'ipv6_nd_target': '2001:db8::1',
     'ipv6_nd_sll': '00:00:00:00:00:01',
-    'ipv6_nd_tll': '00:00:00:00:00:00'
-    }
-  openflow_version = subprocess.check_output(["ovs-ofctl", "--version"]).decode("utf-8").splitlines()[0].split()[1]
-  if openflow_version >= "0x05":
-        for key, value in fields.items():
-            if isinstance(value, str):
-                 value_str = '"{}"'.format(value)
-             else:
-                value_str = str(value)
-             net.controllers[0].cmd("ovs-ofctl add-flow s1 {0}={1},actions=output:2".format(key, value_str))
-  else:
-    for key, value in fields.items():
-        if isinstance(value, str):
-             value_str = '"{}"'.format(value)
-        else:
-            value_str = str(value)
-        net.controllers[0].cmd("ovs-ofctl add-flow s1 {0}={1},actions=output:2".format(key, value_str))
+    'ipv6_nd_tll': '00:00:00:00:00:00',
+    'mpls_label': 0x1234,
+    'mpls_tc': 3,
+    'mpls_bos': 1,
+    'pbb_isid': 0x123456,
+    'tunnel_id': 0x12345678,
+    'ipv6_exthdr': 0x123456,
+    'pbb_uca': 1,
+    'tcp_flags': 0x3f,
+    'ip_frag': 0x01,
+    'icmpv6_nd_tll': '00:00:00:00:00:00',
+    'mpls_ttl': 64,
+    'mpls_bos': 0
+}
+
+for key, value in fields.items():
+    if isinstance(value, str):
+        value_str = '"{}"'.format(value)
+    else:
+        value_str = str(value)
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 {0}={1},actions=output:2".format(key, value_str))
+
             
 
     # Dump OpenFlow flows and display 25 header fields
