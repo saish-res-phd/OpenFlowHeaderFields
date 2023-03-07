@@ -23,7 +23,7 @@ def start_network():
     h2.cmd('ifconfig h2-eth0 10.0.0.2 netmask 255.255.255.0')
     
     # Define flow rules for all available header fields in OVS 2.9.8 and OpenFlow 1.5
-    fields = {
+   fields = {
     'in_port': 1,
     'in_phy_port': 1,
     'metadata': 0x1234567890abcdef,
@@ -77,8 +77,6 @@ def start_network():
         else:
             value_str = str(value)
         net.controllers[0].cmd("ovs-ofctl add-flow s1 {0}={1},actions=output:2".format(key, value_str))
-
-            
 
     # Dump OpenFlow flows and display 25 header fields
     flows = net.controllers[0].cmd('ovs-ofctl dump-flows s1')
