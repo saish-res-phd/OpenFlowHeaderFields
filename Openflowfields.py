@@ -23,7 +23,8 @@ def start_network():
     h2.cmd('ifconfig h2-eth0 10.0.0.2 netmask 255.255.255.0')
     
     # Define flow rules for all available header fields in OVS 2.9.8 and OpenFlow 1.5
-   fields = {'in_port': 1,
+   fields = {
+          'in_port': 1,
           'in_phy_port': 1,
           'metadata': 0x1234567890abcdef,
           'eth_dst': '00:00:00:00:00:02',
@@ -69,7 +70,7 @@ def start_network():
           'icmpv6_nd_tll': '00:00:00:00:00:00',
           'mpls_ttl': 64,
           'mpls_bos': 0
-          }
+   }
    for key, value in fields.items():
         if isinstance(value, str):
             value_str = '"{}"'.format(value)
