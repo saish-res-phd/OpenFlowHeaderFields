@@ -1,7 +1,6 @@
 from mininet.net import Mininet
 from mininet.node import Controller, OVSSwitch
 from mininet.link import TCLink
-import subprocess
 
 def start_network():
     # Create Mininet network
@@ -23,7 +22,7 @@ def start_network():
     h1.cmd('ifconfig h1-eth0 10.0.0.1 netmask 255.255.255.0')
     h2.cmd('ifconfig h2-eth0 10.0.0.2 netmask 255.255.255.0')
     
-    # Define OpenFlow header fields on controller using ovs-ofctl command
+    # Define flow rules for all available header fields in OVS 2.9.8 and OpenFlow 1.5
     fields = {
     'in_port': 1,
     'in_phy_port': 1,
@@ -72,7 +71,6 @@ def start_network():
     'mpls_ttl': 64,
     'mpls_bos': 0
 }
-
 for key, value in fields.items():
     if isinstance(value, str):
         value_str = '"{}"'.format(value)
