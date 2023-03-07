@@ -53,7 +53,7 @@ def start_network():
     }
     for key, value in fields.items():
         if isinstance(value, int):
-            value_str = str(value)
+            value_str = '"{}"'.format(value)
         else:
             value_str = f'"{value}"'
         net.controllers[0].cmd("ovs-ofctl add-flow s1 {0}={1},actions=output:2".format(key, value_str))
