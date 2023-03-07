@@ -61,7 +61,7 @@ def start_network():
             value_str = "0x{:X}".format(value)
         else:
             value_str = str(value)
-        net.controllers[0].cmd("ovs-ofctl add-flow s1 in_port={0},dl_vlan_pcp={1},actions=output:2".format(fields['in_port'], fields['vlan_pcp']))
+        net.controllers[0].cmd("ovs-ofctl add-flow s1 {0}={1},actions=output:2".format(key, value_str))
 
 
 
