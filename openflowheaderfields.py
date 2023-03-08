@@ -60,7 +60,7 @@ def start_network():
       for combo in itertools.combinations(fields.items(), i):
         combination = dict(combo)
         match_str = ",".join(["{}={}".format(k, v) for k, v in combination.items()])
-        combination.append(match_str)
+        combinations.append(match_str)
        
     for match_str in combinations:
       net.controllers[0].cmd("ovs-ofctl add-flow s1 {},actions=NORMAL".format(match_str))
