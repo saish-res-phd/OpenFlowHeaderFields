@@ -1,6 +1,7 @@
 from mininet.net import Mininet
 from mininet.node import Controller, OVSSwitch
 from mininet.link import TCLink
+import itertools
 
 def start_network():
     # Create Mininet network
@@ -64,15 +65,12 @@ def start_network():
       net.controllers[0].cmd("ovs-ofctl add-flow s1 {},actions=NORMAL".format(match_str))
       
     # Dump OpenFlow flows and display all header fields
-    flows = net.controllers[0].cmd('ovs-ofctl -O OpenFlow13 dump-flows s1')   
-    for flow in flows.split('\n'):
-      fields = {}
-      for item in flow.split(','):
-        if '=' in item:
-          key, value = item.split('=')
-          fields[key.strip()] = value.strip()
-      print(fields)  
-
-      
+    flows = net.controllers[0].cmd("ovs-ofctl dump-flows s1")
+    for flow in flows.splitlines():
+        print(flow)
+        net.controllers[0].cmd("ovs-ofctl --protocols=OpenFlow13 match s1 {}".format(flow.split(" cookie")[0]))
+    # Stop network
+    #net.stop()
+    
 if __name__ == '__main__':
-  start_network()
+    start_network()
