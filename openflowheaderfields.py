@@ -58,10 +58,11 @@ def start_network():
     combinations = []
     for i in range(len(fields) + 1):
       for combo in itertools.combinations(fields.items(), i):
-        combinations.append(dict(combo))
+        combination = dict(combo)
+        match_str = ",".join(["{}={}".format(k, v) for k, v in combination.items()])
+        combination.append(match_str)
        
-    for combination in combinations:
-      match_str = ",".join(["{}={}".format(k, v) for k, v in combination.items()])
+    for match_str in combinations:
       net.controllers[0].cmd("ovs-ofctl add-flow s1 {},actions=NORMAL".format(match_str))
       
     # Dump OpenFlow flows and display all header fields
