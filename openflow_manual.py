@@ -58,7 +58,17 @@ def start_network():
     net.controllers[0].cmd("ovs-ofctl add-flow s1 in_port=1,actions=NORMAL")
     net.controllers[0].cmd("ovs-ofctl add-flow s1 in_phy_port=1,actions=NORMAL")
     net.controllers[0].cmd("ovs-ofctl add-flow s1 metadata=0x1234567890abcdef,actions=NORMAL")
-    net.controllers[0].cmd("ovs-ofctl add-flow s1 metadata=0x1234567890abcdef,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 dl_src=00:00:00:00:00:01,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 dl_dst=00:00:00:00:00:02,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 dl_vlan=4096,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 dl_vlan_pcp=3,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 dl_type=2048,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 nw_src=10.0.0.1,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 nw_dst=10.0.0.2,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 nw_proto=6,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 nnw_tos=10,actions=NORMAL")
+    
+    
 
 
     # Dump OpenFlow flows and display 25 header fields
