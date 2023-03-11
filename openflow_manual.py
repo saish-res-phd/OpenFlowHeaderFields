@@ -67,8 +67,23 @@ def start_network():
     net.controllers[0].cmd("ovs-ofctl add-flow s1 nw_dst=10.0.0.2,actions=NORMAL")
     net.controllers[0].cmd("ovs-ofctl add-flow s1 nw_proto=6,actions=NORMAL")
     net.controllers[0].cmd("ovs-ofctl add-flow s1 nnw_tos=10,actions=NORMAL")
-    
-    
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 tp_src=1234,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 tp_dst=80,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 icmp_type=8,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 icmp_code=0,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 arp_op=1,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 arp_spa=10.0.0.1,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 arp_tpa=10.0.0.2,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 arp_sha=00:00:00:00:00:01,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 arp_tha=00:00:00:00:00:00,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 ipv6_src=2001:db8::1,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 ipv6_dst=2001:db8::2,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 ipv6_flabel=1234,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 icmpv6_type=128,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 icmpv6_code=0,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 ipv6_nd_target=2001:db8::1,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 ipv6_nd_sll=00:00:00:00:00:01,actions=NORMAL")
+    net.controllers[0].cmd("ovs-ofctl add-flow s1 ipv6_nd_tll': '00:00:00:00:00:00,actions=NORMAL")
 
 
     # Dump OpenFlow flows and display 25 header fields
